@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -54,6 +56,33 @@ namespace CallForHelp
             }
 
             return location;
+        }
+
+        private void btnHelp_Clicked(object sender, EventArgs e)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                var location = GetLocation().Result;
+                var persistedPerson = (Utils.Storage.GetPersistedPerson()).Result;
+
+                var request = new Request
+                {
+                    Latitude = location.Latitude.ToString(),
+                    Longitude = location.Longitude.ToString(),
+                    RequestorId = persistedPerson.Email,
+                    Name = persistedPerson.Name
+                };
+
+                var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+
+                var response = httpClient.PostAsync("<URL>", stringContent).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    DisplayAlert("Sucesso", "Solicitação efetuada com sucesso!", "OK").GetAwaiter().GetResult();
+                }
+
+            }
         }
     }
 }

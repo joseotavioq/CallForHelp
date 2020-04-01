@@ -1,4 +1,8 @@
-﻿using System;
+﻿using CallForHelp.Utils;
+using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,10 +22,11 @@ namespace CallForHelp
         {
             IsBusy = true;
 
-            if (!string.IsNullOrEmpty(txtName.Text))
+            if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtEmail.Text))
             {
-                await Utils.Storage.PersistName(txtName.Text);
-                Application.Current.MainPage = new MainPage();
+                await Utils.Storage.PersistPerson(txtName.Text, txtEmail.Text);
+
+                Application.Current.MainPage = new NavigationPage(new MainPage());
             }
             else
             {

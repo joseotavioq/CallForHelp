@@ -12,6 +12,9 @@
                              HorizontalOptions="FillAndExpand">
                     <Label Text="Nome"/>
                     <Entry x:Name="txtName" Placeholder="Por favor, informe seu nome" />
+
+                    <Label Text="Email"/>
+                    <Entry x:Name="txtEmail" Placeholder="Por favor, informe seu email" />
                     <Button x:Name="btnLogin" Text="Acessar" Clicked="btnLogin_Clicked" />
                 </StackLayout>
             </StackLayout>
