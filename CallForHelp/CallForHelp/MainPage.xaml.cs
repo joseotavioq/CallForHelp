@@ -40,18 +40,22 @@ namespace CallForHelp
             }
             catch (FeatureNotSupportedException fnsEx)
             {
+                await DisplayAlert("Erro", "A opção de localização não é suportada neste dispositivo.", "OK");
                 // Handle not supported on device exception
             }
             catch (FeatureNotEnabledException fneEx)
             {
+                await DisplayAlert("Erro", "A opção de localização está desabilitada no dispositivo.", "OK");
                 // Handle not enabled on device exception
             }
             catch (PermissionException pEx)
             {
+                await DisplayAlert("Erro", "Ocorreu um erro de permissão ao tentar obter a localização atual do dispositivo.", "OK");
                 // Handle permission exception
             }
             catch (Exception ex)
             {
+                await DisplayAlert("Erro", "Não foi possível obter a sua localização.", "OK");
                 // Unable to get location
             }
 
@@ -63,27 +67,31 @@ namespace CallForHelp
             IsBusy = true;
 
             var location = await GetLocation();
-            var persistedPerson = await Utils.Storage.GetPersistedPerson();
 
-            var request = new Request
+            if (location != null)
             {
-                Latitude = location.Latitude,
-                Longitude = location.Longitude,
-                RequestorId = persistedPerson.Email,
-                Name = persistedPerson.Name
-            };
+                var persistedPerson = await Utils.Storage.GetPersistedPerson();
 
-            var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+                var request = new Request
+                {
+                    Latitude = location.Latitude,
+                    Longitude = location.Longitude,
+                    RequestorId = persistedPerson.Email,
+                    Name = persistedPerson.Name
+                };
 
-            var response = await _httpClient.PostAsync("<URL>", stringContent);
+                var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
-            if (response.IsSuccessStatusCode)
-            {
-                await DisplayAlert("Sucesso", "Solicitação efetuada com sucesso! Aguarde até que alguem entre em contato com você!", "OK");
-            }
-            else
-            {
-                await DisplayAlert("Erro", "Ocorreu um erro ao efetuar sua solicitação. Tente novamente mais tarde!", "OK");
+                var response = await _httpClient.PostAsync("<URL>", stringContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Sucesso", "Solicitação efetuada com sucesso! Aguarde até que alguem entre em contato com você!", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Erro", "Ocorreu um erro ao efetuar sua solicitação. Tente novamente mais tarde!", "OK");
+                }
             }
 
             IsBusy = false;
