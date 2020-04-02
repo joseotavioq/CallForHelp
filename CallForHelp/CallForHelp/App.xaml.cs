@@ -9,14 +9,16 @@ namespace CallForHelp
         {
             InitializeComponent();
 
+#if DEBUG
             Utils.Storage.ClearStorage();
+#endif
 
             DefineWhichPageToOpen();
         }
 
         private async void DefineWhichPageToOpen()
         {
-            bool nameAlreadyExists = await Utils.Storage.IsNameExists();
+            bool nameAlreadyExists = await Utils.Storage.NameAlreadyExists();
 
             if (nameAlreadyExists)
                 MainPage = new MainPage();

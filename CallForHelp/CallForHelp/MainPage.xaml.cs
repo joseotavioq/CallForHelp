@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CallForHelp.DTO;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,12 +17,11 @@ namespace CallForHelp
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        HttpClient _httpClient = null;
         public MainPage()
         {
             InitializeComponent();
-
-            //Test
-            var location = GetLocation().Result;
+            _httpClient = new HttpClient();
         }
 
         private async Task<Location> GetLocation()
@@ -58,31 +58,35 @@ namespace CallForHelp
             return location;
         }
 
-        private void btnHelp_Clicked(object sender, EventArgs e)
+        private async void btnHelp_Clicked(object sender, EventArgs e)
         {
-            using (HttpClient httpClient = new HttpClient())
+            IsBusy = true;
+
+            var location = await GetLocation();
+            var persistedPerson = await Utils.Storage.GetPersistedPerson();
+
+            var request = new Request
             {
-                var location = GetLocation().Result;
-                var persistedPerson = (Utils.Storage.GetPersistedPerson()).Result;
+                Latitude = location.Latitude,
+                Longitude = location.Longitude,
+                RequestorId = persistedPerson.Email,
+                Name = persistedPerson.Name
+            };
 
-                var request = new Request
-                {
-                    Latitude = location.Latitude.ToString(),
-                    Longitude = location.Longitude.ToString(),
-                    RequestorId = persistedPerson.Email,
-                    Name = persistedPerson.Name
-                };
+            var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
-                var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("<URL>", stringContent);
 
-                var response = httpClient.PostAsync("<URL>", stringContent).Result;
-
-                if (response.IsSuccessStatusCode)
-                {
-                    DisplayAlert("Sucesso", "Solicitação efetuada com sucesso!", "OK").GetAwaiter().GetResult();
-                }
-
+            if (response.IsSuccessStatusCode)
+            {
+                await DisplayAlert("Sucesso", "Solicitação efetuada com sucesso! Aguarde até que alguem entre em contato com você!", "OK");
             }
+            else
+            {
+                await DisplayAlert("Erro", "Ocorreu um erro ao efetuar sua solicitação. Tente novamente mais tarde!", "OK");
+            }
+
+            IsBusy = false;
         }
     }
 }

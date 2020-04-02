@@ -1,9 +1,9 @@
-﻿namespace CallForHelp
+﻿namespace CallForHelp.DTO
 {
     public class Request
     {
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         public string RequestorId { get; set; }
         public string Name { get; set; }
     }

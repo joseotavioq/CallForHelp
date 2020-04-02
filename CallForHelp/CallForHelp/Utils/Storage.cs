@@ -1,18 +1,18 @@
 ﻿using Newtonsoft.Json;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
+using System.Threading.Tasks;
 
 namespace CallForHelp.Utils
 {
     public class Storage
     {
-        private const string NAME_ATTRIBUTE = "Name";
+        private const string PERSON_INFO_KEY = "personInfo";
 
-        public static async Task<bool> IsNameExists()
+        public static async Task<bool> NameAlreadyExists()
         {
-            var name = await SecureStorage.GetAsync(NAME_ATTRIBUTE);
+            var jsonObject = await SecureStorage.GetAsync(PERSON_INFO_KEY);
 
-            return !string.IsNullOrEmpty(name);
+            return !string.IsNullOrEmpty(jsonObject);
         }
 
         public static async Task PersistPerson(string name, string email)
@@ -23,12 +23,12 @@ namespace CallForHelp.Utils
                 Email = email
             });
 
-            await SecureStorage.SetAsync(NAME_ATTRIBUTE, jsonObject);
+            await SecureStorage.SetAsync(PERSON_INFO_KEY, jsonObject);
         }
 
         public static async Task<Person> GetPersistedPerson()
         {
-            var jsonString = await SecureStorage.GetAsync(NAME_ATTRIBUTE);
+            var jsonString = await SecureStorage.GetAsync(PERSON_INFO_KEY);
 
             return JsonConvert.DeserializeObject<Person>(jsonString);
         }

@@ -30,7 +30,7 @@ namespace CallForHelp
             }
             else
             {
-                await DisplayAlert("Erro", "O campo nome é obrigatório!", "OK");
+                await DisplayAlert("Erro", "Os campos nome e e-mail são obrigatórios!", "OK");
             }
 
             IsBusy = false;
