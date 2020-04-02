@@ -9,6 +9,8 @@ namespace CallForHelp
         {
             InitializeComponent();
 
+            Utils.Storage.ClearStorage();
+
             DefineWhichPageToOpen();
         }
 

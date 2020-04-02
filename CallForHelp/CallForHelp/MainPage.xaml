@@ -7,9 +7,10 @@
              x:Class="CallForHelp.MainPage" Title="Call For Help!">
 
     <StackLayout>
-        <Label Text="Welcome to Xamarin.Forms!" 
+        <Label Text="Call For Help" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
+        <Button x:Name="btnHelp" Text="Clique aqui para solicitar uma ajuda" Clicked="btnHelp_Clicked"></Button>
     </StackLayout>
 
 </ContentPage>

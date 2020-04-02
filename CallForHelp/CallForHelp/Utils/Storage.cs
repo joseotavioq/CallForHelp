@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace CallForHelp.Utils
@@ -14,9 +15,27 @@ namespace CallForHelp.Utils
             return !string.IsNullOrEmpty(name);
         }
 
-        public static async Task PersistName(string name)
+        public static async Task PersistPerson(string name, string email)
         {
-            await SecureStorage.SetAsync(NAME_ATTRIBUTE, name);
+            var jsonObject = JsonConvert.SerializeObject(new Person
+            {
+                Name = name,
+                Email = email
+            });
+
+            await SecureStorage.SetAsync(NAME_ATTRIBUTE, jsonObject);
+        }
+
+        public static async Task<Person> GetPersistedPerson()
+        {
+            var jsonString = await SecureStorage.GetAsync(NAME_ATTRIBUTE);
+
+            return JsonConvert.DeserializeObject<Person>(jsonString);
+        }
+
+        public static void ClearStorage()
+        {
+            SecureStorage.RemoveAll();
         }
     }
 }
