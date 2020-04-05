@@ -26,11 +26,11 @@ namespace CallForHelp
             {
                 await Utils.Storage.PersistPerson(txtName.Text, txtEmail.Text);
 
-                Application.Current.MainPage = new NavigationPage(new MainPage());
+                Application.Current.MainPage = new MainPage();
             }
             else
             {
-                await DisplayAlert("Erro", "Os campos nome e e-mail são obrigatórios!", "OK");
+                await DisplayAlert("Erro", Messages.RequiredFields, "OK");
             }
 
             IsBusy = false;

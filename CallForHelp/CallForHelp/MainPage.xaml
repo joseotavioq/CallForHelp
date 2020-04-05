@@ -7,11 +7,11 @@
              x:Class="CallForHelp.MainPage" Title="Call For Help!">
 
     <StackLayout>
-        <Label Text="Call For Help"
-           HorizontalOptions="Center"
+        <Label Text="Call For Help!" HorizontalTextAlignment="Center"
+           HorizontalOptions="Center" FontSize="Large" Padding="20" FontAttributes="Bold"
            VerticalOptions="CenterAndExpand" />
-        <Button x:Name="btnHelp" Text="Clique aqui para solicitar uma ajuda"
-                WidthRequest="200" HeightRequest="200" CornerRadius="100" VerticalOptions="Center" HorizontalOptions="Center"
+        <Button x:Name="btnHelp" Text="Clique aqui para solicitar uma ajuda" 
+                WidthRequest="300" HeightRequest="300" CornerRadius="150" VerticalOptions="Center" HorizontalOptions="Center"
                 Clicked="btnHelp_Clicked"></Button>
 
         <ActivityIndicator IsRunning="{Binding IsBusy}" IsEnabled="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center" />

@@ -9,10 +9,6 @@ namespace CallForHelp
         {
             InitializeComponent();
 
-#if DEBUG
-            Utils.Storage.ClearStorage();
-#endif
-
             DefineWhichPageToOpen();
         }
 

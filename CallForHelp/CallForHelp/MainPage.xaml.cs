@@ -38,24 +38,24 @@ namespace CallForHelp
                     location = await Geolocation.GetLocationAsync(request);
                 }
             }
-            catch (FeatureNotSupportedException fnsEx)
+            catch (FeatureNotSupportedException)
             {
-                await DisplayAlert("Erro", "A opção de localização não é suportada neste dispositivo.", "OK");
+                await DisplayAlert("Erro", Messages.LocationNotSupportedOnDevice, "OK");
                 // Handle not supported on device exception
             }
-            catch (FeatureNotEnabledException fneEx)
+            catch (FeatureNotEnabledException)
             {
-                await DisplayAlert("Erro", "A opção de localização está desabilitada no dispositivo.", "OK");
+                await DisplayAlert("Erro", Messages.LocationIsDisabled, "OK");
                 // Handle not enabled on device exception
             }
-            catch (PermissionException pEx)
+            catch (PermissionException)
             {
-                await DisplayAlert("Erro", "Ocorreu um erro de permissão ao tentar obter a localização atual do dispositivo.", "OK");
+                await DisplayAlert("Erro", Messages.LocationPermissionError, "OK");
                 // Handle permission exception
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                await DisplayAlert("Erro", "Não foi possível obter a sua localização.", "OK");
+                await DisplayAlert("Erro", Messages.LocationItWasNotPossibleToGetLocation, "OK");
                 // Unable to get location
             }
 
@@ -70,27 +70,31 @@ namespace CallForHelp
 
             if (location != null)
             {
-                var persistedPerson = await Utils.Storage.GetPersistedPerson();
-
-                var request = new Request
+                try
                 {
-                    Latitude = location.Latitude,
-                    Longitude = location.Longitude,
-                    RequestorId = persistedPerson.Email,
-                    Name = persistedPerson.Name
-                };
+                    var persistedPerson = await Utils.Storage.GetPersistedPerson();
 
-                var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+                    var request = new Request
+                    {
+                        Latitude = location.Latitude,
+                        Longitude = location.Longitude,
+                        RequestorId = persistedPerson.Email,
+                        Name = persistedPerson.Name,
+                        RegId = persistedPerson.RegId
+                    };
 
-                var response = await _httpClient.PostAsync("<URL>", stringContent);
+                    var stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    await DisplayAlert("Sucesso", "Solicitação efetuada com sucesso! Aguarde até que alguem entre em contato com você!", "OK");
+                    var response = await _httpClient.PostAsync("<URL>", stringContent);
+
+                    if (response.IsSuccessStatusCode)
+                        await DisplayAlert("Sucesso", Messages.Success, "OK");
+                    else
+                        await DisplayAlert("Erro", Messages.ErrorOnCallForHelp, "OK");
                 }
-                else
+                catch (Exception)
                 {
-                    await DisplayAlert("Erro", "Ocorreu um erro ao efetuar sua solicitação. Tente novamente mais tarde!", "OK");
+                    await DisplayAlert("Erro", Messages.ErrorOnCallForHelp, "OK");
                 }
             }
 
