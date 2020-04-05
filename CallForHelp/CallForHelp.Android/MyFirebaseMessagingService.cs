@@ -71,7 +71,7 @@ namespace CallForHelp.Droid
             // Register with Notification Hubs
             hub = new NotificationHub(Constants.NotificationHubName, Constants.ListenConnectionString, this);
 
-            string id = new Guid().ToString();
+            string id = Guid.NewGuid().ToString();
 
             var tags = new List<string>() { id };
             var regID = hub.Register(token, tags.ToArray()).RegistrationId;
