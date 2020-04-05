@@ -115,7 +115,7 @@ namespace CallForHelp {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Solicitação efetuada com sucesso! Aguarde até que alguem entre em contato com você!.
+        ///   Looks up a localized string similar to Solicitação efetuada com sucesso! Aguarde, estamos procurando alguem para ajudá-lo!.
         /// </summary>
         internal static string Success {
             get {

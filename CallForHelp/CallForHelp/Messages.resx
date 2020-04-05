@@ -136,6 +136,6 @@
     <value>Os campos nome e e-mail são obrigatórios!</value>
   </data>
   <data name="Success" xml:space="preserve">
-    <value>Solicitação efetuada com sucesso! Aguarde até que alguem entre em contato com você!</value>
+    <value>Solicitação efetuada com sucesso! Aguarde, estamos procurando alguem para ajudá-lo!</value>
   </data>
 </root>
