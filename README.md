@@ -20,7 +20,7 @@ git clone https://github.com/beatrizmayumi/CallForHelp
 ```
 
 ## Utilização
-No arquivo Constants.cs, substitua <ENDPOINT> pela ListenConnectionString gerada no seu Notification Hub:
+No arquivo Constants.cs, substitua \<ENDPOINT>\ pela ListenConnectionString gerada no seu Notification Hub, e \<NOTIFICATION_HUB_NAME>\ pelo nome de seu Notification Hub:
 
 ```
 public const string ListenConnectionString = "<ENDPOINT>";
