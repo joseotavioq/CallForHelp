@@ -6,17 +6,11 @@ O aplicativo foi desenvolvido utilizando a plataforma Xamarin.
 
 A comunicação entre o aplicativo e o Microsoft Teams é feita via Logic Apps e a geração de notificação para o usuário por meio de Azure Functions a Azure Notification Hub. 
 
-**Requisitos do Sistema para Desenvolvimento em Xamarin**
+[Requisitos do Sistema para Desenvolvimento em Xamarin](https://docs.microsoft.com/pt-br/xamarin/cross-platform/get-started/requirements)
 
-https://docs.microsoft.com/pt-br/xamarin/cross-platform/get-started/requirements
+[FCM (Firebase Cloud Messaging)](https://docs.microsoft.com/pt-br/xamarin/android/data-cloud/google-messaging/firebase-cloud-messaging)
 
-**FCM (Firebase Cloud Messaging)**
-
-https://docs.microsoft.com/pt-br/xamarin/android/data-cloud/google-messaging/firebase-cloud-messaging
-
-**Enviar notificações por push para aplicativos Xamarin.Android usando os Hubs de Notificação**
-
-https://docs.microsoft.com/pt-br/azure/notification-hubs/xamarin-notification-hubs-push-notifications-android-gcm#create-a-firebase-project-and-enable-firebase-cloud-messaging
+[Enviar notificações por push para aplicativos Xamarin.Android usando os Hubs de Notificação](https://docs.microsoft.com/pt-br/azure/notification-hubs/xamarin-notification-hubs-push-notifications-android-gcm#create-a-firebase-project-and-enable-firebase-cloud-messaging)
 
 ## Instalação
 
@@ -46,4 +40,10 @@ Exemplo de campos a serem substituídos:
 },
 ```
 
+## Authors
+Beatriz Matsui, Caio Melo, José Otavio Quaglio, Nei Lopez
+
+## Licença
+
+MIT
   
